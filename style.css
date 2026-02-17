@@ -1,22 +1,57 @@
-body{
-    margin: 0;
-    padding: 0;  
+body {
+  margin: 0;
+  padding: 0;
+} /* header*/
+.header {
+  background-color: yellow;
+  width: 100%;
+height: 310px;
 }
-.header{
-    background-color: yellow;
-    width: 100%;            
-    margin: 0;            
-    padding: 10px 0;  
+.titulo {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
 }
-.titulo{
-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+.div {
+
 }
-.div{
-    object-fit: contain;
-   
+.tamaño-logo {
+  height: 450px;
+  width: 300px;
+  position: relative;
+  top: 20px;
+  left: 1110px;
+
+} /*Main*/
+.button1 {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
 }
-.tamaño-logo{
-    height:450px ;
-    width: 300px;
-    position: relative; top: 20px; left: 1110px;
+.button2 {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 13px;
+  border: none;
+  border-radius: 5px;
 }
+.div2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/*Footer*/
