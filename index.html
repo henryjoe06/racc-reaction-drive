@@ -6,31 +6,56 @@
     <link rel="icon" type="image/png" href="" />
     <title>REACTION DRIVER</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="pagina-de-juegos/index.html">
+    <link rel="stylesheet" href="pagina-de-juegos/index.html" />
   </head>
   <body>
-    <header class="header">
-      <div class="">
-        <div class="div2">
-          <img src="img/logo.png" alt="" class="tamaño" />
-          <h1 class="titulo">
-            <p>REACTION</p>
-            <p class="p1">DRIVER</p>
-          </h1>
+    <header class="game-header">
+      <div class="header-container">
+        <img src="img/logo.png" alt="Logo Reaction" class="header-logo" />
+
+        <div class="header-titols">
+          <h1>REACTION</h1>
+          <h2>DRIVER</h2>
+        </div>
       </div>
     </header>
     <main>
-      <div class="contenedor">
-      <a href="pagina-de-juegos/index.html"><button class="button1"><p class="p">JUGAR</p></button></a>
-      <a href="#"><button class="button2"><p class="p">OPCIONS</p></button></a>
+      <div class="contenedor-menu">
+        <a href="pagina-de-juegos/index.html"><button class="btn-gran">JUGAR</button></a>
+
+        <div class="bloque-opcions">
+          <button id="btn-opcions" class="btn-gran">OPCIONS</button>
+
+          <div id="finestra-instruccions" class="popover oculto">
+            <h3>Comandaments</h3>
+            <ul>
+              <li><strong>↑ :</strong> A dalt</li>
+              <li><strong>↓ :</strong> A baix</li>
+              <li><strong>→ :</strong> Accelerar</li>
+              <li><strong>← :</strong> Frenar</li>
+            </ul>
+            <button id="btn-tancar">Tancar</button>
+          </div>
+        </div>
       </div>
-      <div></div>
+      <script>
+        const botoOpcions = document.getElementById("btn-opcions");
+        const finestra = document.getElementById("finestra-instruccions");
+        const botoTancar = document.getElementById("btn-tancar");
+
+        // Mostrar / Amagar
+        botoOpcions.onclick = function () {
+          finestra.classList.toggle("oculto");
+        };
+
+        // Tancar
+        botoTancar.onclick = function () {
+          finestra.classList.add("oculto");
+        };
+      </script>
     </main>
     <footer class="footer">
-      <div></div>
       <p class="p"><b>@2026</b></p>
-      <img src="img/" alt="">
     </footer>
   </body>
 </html>
-
