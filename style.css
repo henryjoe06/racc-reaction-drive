@@ -7,11 +7,16 @@ body {
 .game-header {
   background-color: #ffcc00; /* El mateix groc de la teva imatge */
   border-bottom: 5px solid #000000; /* Borde negre gruixut a sota */
-  padding: 20px 0;
+  padding: 20px 10px;
   width: 100%;
+  height: 100px;
   display: flex;
   justify-content: center; /* Centra el contingut */
   align-items: center;
+}
+.div-logo {
+  justify-content: space-between;
+  align-items: right;
 }
 
 .header-container {
@@ -41,6 +46,15 @@ body {
   font-size: 25px;
   color: #000;
   letter-spacing: 2px;
+}
+.nueva-imagen-izquierda {
+  position: absolute; /* Hace que la imagen flote */
+  left: 20px; /* La pega a la izquierda (donde dibujaste el cuadro) */
+  top: 7%; /* La baja a la mitad del header */
+  transform: translateY(-50%); /* La centra verticalmente perfecta */
+
+  height: 100px; /* Ajusta este tamaño para que quepa bien en tu cuadro */
+  width: auto;
 }
 /*Main*/
 .button1 {
@@ -122,25 +136,30 @@ body {
   display: none;
 }
 /*Footer*/
-.img-logo1 {
-  width: 50px;
-  height: 70px;
-  margin: 50px;
-}
-.footer {
+.footer-fijo {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #ffd829;
-  color: black;
-  padding: 15px;
-  text-align: center;
-  height: none;
   display: flex;
-  justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
+  justify-content: space-between;
+  align-items: center;
+
+  /* SOLUCIÓN: Añadimos espacio en los laterales */
+  padding: 10px 30px; /* 10px arriba/abajo, 30px a los lados */
+
+  background-color: #222;
+  color: white;
+  z-index: 1000;
+  box-sizing: border-box; /* IMPORTANTE: Para que el padding no estire el ancho del footer */
 }
-.p {
-  font-size: 24px; /* Hace la letra del párrafo grande */
+
+.img-footer {
+  width: 250px;
+  height: auto;
+}
+
+/* Margen extra para asegurar que no se corte a la derecha */
+.img-derecha {
+  margin-right: 15px;
 }
