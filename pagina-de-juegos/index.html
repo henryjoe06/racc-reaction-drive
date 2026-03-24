@@ -2,244 +2,369 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Selección de Niveles - Mundo 2D</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega Retro Level Selector</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-
     <style>
+      :root {
+        --primary-bg: #0f0c29;
+        --card-bg: #24243e;
+        --accent: #ff0055;
+        --locked: #1a1a2e;
+        --gold: #ffde06;
+        --cyan: #00d2ff;
+        --card-width: 280px;
+      }
+
       body {
-        margin: 0;
-        padding: 0;
-        font-family: "Press Start 2P", cursive;
-        background: linear-gradient(#1b2735, #090a0f);
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
         color: #fff;
+        font-family: "Press Start 2P", cursive;
         display: flex;
         flex-direction: column;
         align-items: center;
         min-height: 100vh;
-        overflow-x: hidden;
+        margin: 0;
+        padding: 60px 20px;
       }
 
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 300%;
-        height: 300%;
-        background: url("https://i.imgur.com/8wP4JxT.png");
-        opacity: 0.12;
-        animation: fondo 35s linear infinite;
-        z-index: -1;
+      /* --- BOTÓN VOLVER --- */
+      .back-container {
+        position: absolute;
+        top: 20px;
+        left: 20px;
       }
 
-      @keyframes fondo {
-        from {
-          transform: translate(0, 0) scale(1.2);
-        }
-        to {
-          transform: translate(-400px, -400px) scale(1.2);
-        }
+      .back-btn {
+        background: transparent;
+        color: var(--cyan);
+        border: 4px solid var(--cyan);
+        padding: 10px 15px;
+        font-family: "Press Start 2P", cursive;
+        font-size: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+      }
+
+      .back-btn:hover {
+        background: var(--cyan);
+        color: #000;
+        box-shadow: 0 0 20px var(--cyan);
+        transform: scale(1.05);
+      }
+
+      .back-btn:active {
+        transform: scale(0.95);
       }
 
       h1 {
-        margin-top: 40px;
-        font-size: 2.4em;
-        color: #ffdd59;
-        text-shadow: 4px 4px #000;
-        letter-spacing: 4px;
+        font-size: 36px;
+        margin-bottom: 60px;
+        color: #fff;
+        text-shadow:
+          6px 6px 0px var(--accent),
+          10px 10px 0px #000;
+        text-align: center;
+        line-height: 1.5;
       }
 
-      .galeria-niveles {
-        margin-top: 40px;
+      .levels-grid {
         display: grid;
-        grid-template-columns: repeat(3, 180px);
-        gap: 40px;
-        padding: 40px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 4px solid #ffdd59;
-        border-radius: 15px;
-        box-shadow: 0 0 25px #000;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 50px;
+        max-width: 1100px;
       }
 
-      .tarjeta-nivel {
-        width: 180px;
-        height: 180px;
-        background: linear-gradient(#ff9f1a, #e67e22);
-        border: 5px solid #d35400;
-        border-radius: 12px;
+      .level-card {
+        background: var(--card-bg);
+        border: 8px solid #fff;
+        border-radius: 20px;
+        padding: 30px 20px;
+        width: var(--card-width);
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         position: relative;
-        transition:
-          transform 0.25s ease,
-          filter 0.25s ease;
-        box-shadow:
-          0 10px 0 #b34700,
-          0 0 20px #000;
-        animation: flotar 2.5s ease-in-out infinite;
+        box-shadow: 0 15px 0px #000;
+        transition: all 0.2s ease-out;
       }
 
-      @keyframes flotar {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
+      .level-card:not(.locked):hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 0px rgba(0, 0, 0, 0.5);
+        border-color: var(--gold);
       }
 
-      .tarjeta-nivel:not(.bloqueado):hover {
-        transform: scale(1.12);
-        filter: brightness(1.25);
-        cursor: pointer;
+      .level-name {
+        font-size: 14px;
+        margin-bottom: 20px;
+        text-align: center;
+        height: 40px;
+        color: var(--cyan);
       }
 
-      .numero-nivel {
-        font-size: 2.8em;
-        text-shadow: 4px 4px #000;
-        z-index: 2;
+      .stars-container {
+        margin-bottom: 25px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px 20px;
+        border-radius: 30px;
       }
 
-      .estrellas {
-        margin-top: 12px;
-        font-size: 1.6em;
-        color: #ffdd59;
-        text-shadow: 3px 3px #000;
-        z-index: 2;
+      .star {
+        font-size: 32px;
+        color: #2c3e50;
+        margin: 0 5px;
+        display: inline-block;
       }
 
-      .tarjeta-nivel.bloqueado {
-        background: linear-gradient(#6c7a89, #4b5a67);
-        border-color: #3d4a55;
-        filter: grayscale(50%);
-        animation: none;
+      .star.earned {
+        color: var(--gold);
+        text-shadow: 0 0 15px orange;
+        animation: bounce 0.6s ease-in-out infinite alternate;
       }
 
-      /* ===== CADENAS EN CRUZ (2 “bandas” cruzadas) ===== */
-      .cadenas-cruz {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 5;
-      }
-      .cadenas-cruz {
-        position: absolute;
-        inset: 0;
-        background-image: url("img/candado-cadenas.png"); /* tu imagen en cruz */
-        background-size: 100% auto;
-        background-repeat: no-repeat;
-        background-position: center;
-        pointer-events: none;
-        z-index: 5;
-        filter: drop-shadow(0 0 8px #000);
-      }
-
-      .cadenas-cruz::before {
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
-
-      .cadenas-cruz::after {
-        transform: translate(-50%, -50%) rotate(-45deg);
-      }
-
-      .tarjeta-nivel.bloqueado:hover {
-        animation: vibrar 0.25s infinite alternate;
-      }
-
-      @keyframes vibrar {
+      @keyframes bounce {
         from {
-          transform: translateX(-3px);
+          transform: translateY(0);
         }
         to {
-          transform: translateX(3px);
+          transform: translateY(-5px);
+        }
+      }
+
+      .preview {
+        width: 100%;
+        height: 120px;
+        background: #1a1a2e;
+        border: 4px solid #000;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        color: #333;
+        border-radius: 10px;
+        background-image: repeating-linear-gradient(
+          45deg,
+          #16213e,
+          #16213e 10px,
+          #1a1a2e 10px,
+          #1a1a2e 20px
+        );
+      }
+
+      .play-btn {
+        background: #009432;
+        border: none;
+        border-bottom: 6px solid #006266;
+        color: white;
+        font-family: "Press Start 2P", cursive;
+        padding: 18px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 10px;
+        text-transform: uppercase;
+      }
+
+      .play-btn:hover:not(:disabled) {
+        background: #a3cb38;
+      }
+
+      .play-btn:active:not(:disabled) {
+        border-bottom-width: 0;
+        transform: translateY(6px);
+      }
+
+      .locked {
+        filter: grayscale(0.5) brightness(0.7);
+      }
+
+      .lock-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+      }
+
+      .chain {
+        position: absolute;
+        width: 130%;
+        height: 25px;
+        background: linear-gradient(90deg, #7f8c8d, #bdc3c7, #7f8c8d);
+        border: 4px solid #2d3436;
+        border-radius: 15px;
+      }
+
+      .chain-1 {
+        transform: rotate(45deg);
+      }
+      .chain-2 {
+        transform: rotate(-45deg);
+      }
+
+      .padlock {
+        position: relative;
+        font-size: 60px;
+        background: #f1c40f;
+        width: 90px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        border: 6px solid #2d3436;
+        box-shadow: 0 8px 0 #c23616;
+        animation: lockFloat 2s infinite ease-in-out;
+      }
+
+      @keyframes lockFloat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      .locked .play-btn {
+        background: #4b4b4b;
+        border-bottom-color: #2d3436;
+        cursor: not-allowed;
+        color: #888;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-10px) rotate(-2deg);
+        }
+        40% {
+          transform: translateX(10px) rotate(2deg);
+        }
+        60% {
+          transform: translateX(-10px) rotate(-1deg);
+        }
+        80% {
+          transform: translateX(10px) rotate(1deg);
+        }
+      }
+      .shake {
+        animation: shake 0.4s ease-in-out;
+      }
+
+      @media (max-width: 1000px) {
+        .levels-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 650px) {
+        .levels-grid {
+          grid-template-columns: 1fr;
+        }
+        .back-container {
+          position: relative;
+          top: 0;
+          left: 0;
+          margin-bottom: 20px;
         }
       }
     </style>
   </head>
-
   <body>
-    <h1>SELECCIÓN DE NIVELES</h1>
+    <div class="back-container">
+      <a href="../index.html" class="back-btn">< VOLVER</a>
+    </div>
 
-    <div class="galeria-niveles" id="galeriaNiveles"></div>
+    <h1>REACTION DRIVE</h1>
 
-    <audio
-      id="sonidoClick"
-      src="https://freesound.org/data/previews/256/256113_3263906-lq.mp3"
-    ></audio>
+    <div class="levels-grid" id="mainGrid"></div>
 
     <script>
-      const datosNiveles = [
-        { id: 1, estaDesbloqueado: true, estrellasObtenidas: 3 },
-        { id: 2, estaDesbloqueado: true, estrellasObtenidas: 2 },
-        { id: 3, estaDesbloqueado: true, estrellasObtenidas: 1 },
-        { id: 4, estaDesbloqueado: false, estrellasObtenidas: 0 },
-        { id: 5, estaDesbloqueado: false, estrellasObtenidas: 0 },
-        { id: 6, estaDesbloqueado: false, estrellasObtenidas: 0 },
+      const levels = [
+        {
+          id: 1,
+          name: "Nivell 1",
+          stars: 3,
+          locked: false,
+          url: "https://davidc0208.github.io/RACC-ReactionDriver/",
+        },
+        { id: 2, name: "Nivell 2", stars: 0, locked: true },
+        { id: 3, name: "Nivell 3", stars: 0, locked: true },
+        { id: 4, name: "Nivell 4", stars: 0, locked: true },
+        { id: 5, name: "Nivell 5", stars: 0, locked: true },
+        { id: 6, name: "Nivell 6", stars: 0, locked: true },
       ];
 
-      const contenedorGaleria = document.getElementById("galeriaNiveles");
-      const sonidoClick = document.getElementById("sonidoClick");
+      function createGallery() {
+        const grid = document.getElementById("mainGrid");
+        grid.innerHTML = "";
 
-      function renderizarGaleria() {
-        contenedorGaleria.innerHTML = "";
+        levels.forEach((lvl) => {
+          const card = document.createElement("div");
+          card.className = `level-card ${lvl.locked ? "locked" : ""}`;
+          card.id = `card-${lvl.id}`;
 
-        datosNiveles.forEach((nivel) => {
-          const tarjeta = document.createElement("div");
-          tarjeta.classList.add("tarjeta-nivel");
-          if (!nivel.estaDesbloqueado) tarjeta.classList.add("bloqueado");
-
-          const numero = document.createElement("div");
-          numero.classList.add("numero-nivel");
-          numero.textContent = nivel.id;
-
-          const estrellas = document.createElement("div");
-          estrellas.classList.add("estrellas");
-
-          if (nivel.estaDesbloqueado) {
-            estrellas.innerHTML =
-              "★".repeat(nivel.estrellasObtenidas) +
-              "☆".repeat(3 - nivel.estrellasObtenidas);
+          let starsHTML = "";
+          for (let i = 1; i <= 3; i++) {
+            starsHTML += `<span class="star ${i <= lvl.stars ? "earned" : ""}">★</span>`;
           }
 
-          tarjeta.appendChild(numero);
-          tarjeta.appendChild(estrellas);
-
-          // CADENAS EN CRUZ PARA BLOQUEADOS
-          if (!nivel.estaDesbloqueado) {
-            const cruz = document.createElement("div");
-            cruz.classList.add("cadenas-cruz");
-            tarjeta.appendChild(cruz);
-          }
-
-          tarjeta.addEventListener("click", () => {
-            if (nivel.estaDesbloqueado) {
-              sonidoClick.play();
-
-              if (nivel.id === 1) {
-                window.location.href =
-                  "https://davidc0208.github.io/RACC-ReactionDriver/";
-              } else {
-                alert("Este nivel aún no tiene juego asignado.");
-              }
-            } else {
-              alert(`Nivel ${nivel.id} está bloqueado.`);
+          card.innerHTML = `
+            <div class="level-name">${lvl.name}</div>
+            <div class="stars-container">${starsHTML}</div>
+            <div class="preview">STAGE ${lvl.id}</div>
+            ${
+              lvl.locked
+                ? `
+                <div class="lock-overlay">
+                    <div class="chain chain-1"></div>
+                    <div class="chain chain-2"></div>
+                    <div class="padlock">🔒</div>
+                </div>
+            `
+                : ""
             }
-          });
-
-          contenedorGaleria.appendChild(tarjeta);
+            <button class="play-btn" onclick="handlePlay(${lvl.id})">PLAY</button>
+          `;
+          grid.appendChild(card);
         });
       }
 
-      renderizarGaleria();
+      window.handlePlay = function (id) {
+        const currentLevel = levels.find((l) => l.id === id);
+        const cardElement = document.getElementById(`card-${id}`);
+
+        if (currentLevel.locked) {
+          cardElement.classList.add("shake");
+          setTimeout(() => cardElement.classList.remove("shake"), 400);
+          return;
+        }
+
+        if (currentLevel.url) {
+          window.location.href = currentLevel.url;
+        } else {
+          alert(`Selected: ${currentLevel.name}`);
+        }
+      };
+
+      createGallery();
     </script>
   </body>
 </html>
