@@ -1,0 +1,210 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+/* header*/
+/* Estil per al Header */
+/* VIDEO DE FONDO */
+#video-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Rellena toda la pantalla */
+  z-index: -1; /* Se queda detrás de todo */
+}
+
+/* CONTENIDO DEL MENÚ */
+#menu-principal {
+  position: relative;
+  z-index: 10; /* Encima del video */
+  text-align: center;
+}
+
+.boton-menu {
+  background: #ffcc00;
+  padding: 20px 40px;
+  margin: 20px;
+  border-radius: 12px;
+  font-size: 22px;
+  border: 4px solid #000;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.boton-menu:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.game-header {
+  background-color: #ffcc00; /* El mateix groc de la teva imatge */
+  border-bottom: 5px solid #000000; /* Borde negre gruixut a sota */
+  padding: 20px 10px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center; /* Centra el contingut */
+  align-items: center;
+}
+.div-logo {
+  justify-content: space-between;
+  align-items: right;
+  margin-top: 10px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Espai entre logo i text */
+}
+
+.header-logo {
+  width: 80px; /* Ajusta la mida del teu logo */
+  height: auto;
+  /* Ombra sòlida per a l'efecte 2D */
+  filter: drop-shadow(4px 4px 0px #000);
+}
+
+.header-titols h1 {
+  margin: 0;
+  font-family: "Arial Black", sans-serif;
+  font-size: 45px;
+  line-height: 1;
+  color: #000;
+}
+
+.header-titols h2 {
+  margin: 0;
+  font-family: "Arial Black", sans-serif;
+  font-size: 25px;
+  color: #000;
+  letter-spacing: 2px;
+}
+.nueva-imagen-izquierda {
+  position: absolute; /* Hace que la imagen flote */
+  left: 20px; /* La pega a la izquierda (donde dibujaste el cuadro) */
+  top: 7%; /* La baja a la mitad del header */
+  transform: translateY(-50%); /* La centra verticalmente perfecta */
+
+  height: 100px; /* Ajusta este tamaño para que quepa bien en tu cuadro */
+  width: auto;
+}
+/*Main*/
+/* Contenedor principal */
+.boton-volver {
+  background: black;
+  color: white;
+  border: 4px solid white;
+  padding: 10px 15px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 12px;
+}
+.button1 {
+  background-color: #007bff;
+  color: white;
+  padding: 30px 30px;
+  border: none;
+  border-radius: 10px;
+}
+.button2 {
+  background-color: #007bff;
+  color: white;
+  padding: 30px 16px;
+  border: none;
+  border-radius: 10px;
+  position: absolute;
+}
+.div2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  margin: 100px;
+  gap: 20px;
+}
+/* El contenedor que agrupa todo */
+.contenedor-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* Espacio entre un botón y otro */
+  margin-left: 180px; /* Separación del borde izquierdo */
+  margin-top: 170px; /* <--- ESTO los baja un poco más */
+  align-items: flex-start;
+}
+
+/* Botones más grandes y anchos */
+.btn-gran {
+  background-color: #ffcc00;
+  color: black;
+  border: 4px solid black; /* Borde un poco más grueso */
+  padding: 15px 0px; /* Más espacio arriba y abajo */
+  width: 280px; /* <--- MÁS ANCHO que antes */
+  font-size: 22px; /* Texto un poco más grande */
+  font-family: "Arial Black", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 6px 6px 0px black; /* Sombra más marcada */
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+
+/* Efecto al pulsar */
+.btn-gran:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0px black;
+}
+
+/* Ajuste de la pestaña de opciones para que no tape el botón */
+.bloque-opcions {
+  position: relative;
+}
+
+.popover {
+  position: absolute;
+  left: 300px; /* Se mueve a la derecha según el nuevo ancho del botón */
+  top: 0px;
+  background: rgb(255, 255, 255);
+  border: 5px solid black;
+  padding: 20px;
+  width: 300px;
+  z-index: 100px;
+  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.oculto {
+  display: none;
+}
+/*Footer*/
+.footer-fijo {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* SOLUCIÓN: Añadimos espacio en los laterales */
+  padding: 10px 30px; /* 10px arriba/abajo, 30px a los lados */
+
+  background-color: #222;
+  color: white;
+  z-index: 1000;
+  box-sizing: border-box; /* IMPORTANTE: Para que el padding no estire el ancho del footer */
+}
+
+.img-footer {
+  width: 250px;
+  height: auto;
+}
+
+/* Margen extra para asegurar que no se corte a la derecha */
+.img-derecha {
+  margin-right: 15px;
+}
