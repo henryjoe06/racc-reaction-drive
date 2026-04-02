@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>REACTION DRIVE</title>
+    <title>REACTION DRIVE - SELECCIÓ DE NIVELL</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
@@ -125,12 +125,8 @@
       }
 
       @keyframes bounce {
-        from {
-          transform: translateY(0);
-        }
-        to {
-          transform: translateY(-5px);
-        }
+        from { transform: translateY(0); }
+        to { transform: translateY(-5px); }
       }
 
       .preview {
@@ -203,12 +199,8 @@
         border-radius: 15px;
       }
 
-      .chain-1 {
-        transform: rotate(45deg);
-      }
-      .chain-2 {
-        transform: rotate(-45deg);
-      }
+      .chain-1 { transform: rotate(45deg); }
+      .chain-2 { transform: rotate(-45deg); }
 
       .padlock {
         position: relative;
@@ -226,40 +218,22 @@
       }
 
       @keyframes lockFloat {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.1);
-        }
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
       }
 
       @keyframes shake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        20% {
-          transform: translateX(-10px);
-        }
-        40% {
-          transform: translateX(10px);
-        }
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-10px); }
+        40% { transform: translateX(10px); }
       }
-      .shake {
-        animation: shake 0.4s ease-in-out;
-      }
+      .shake { animation: shake 0.4s ease-in-out; }
 
       @media (max-width: 1000px) {
-        .levels-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+        .levels-grid { grid-template-columns: repeat(2, 1fr); }
       }
       @media (max-width: 650px) {
-        .levels-grid {
-          grid-template-columns: 1fr;
-        }
+        .levels-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -268,36 +242,34 @@
       <a href="../index.html" class="back-btn"> < TORNAR</a>
     </div>
 
-    <h1>REACTION DRIVE</h1>
+    <h1>REACTION DRIVER</h1>
 
     <div class="levels-grid" id="mainGrid"></div>
 
     <script>
-      // --- SISTEMA DE PROGRESO ---
-      // Obtenemos el nivel máximo alcanzado del localStorage (por defecto 1)
-      let maxUnlocked =
-        parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
+      // --- SISTEMA DE PROGRÉS ---
+      let maxUnlocked = parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
 
       const levels = [
         {
           id: 1,
           name: "Nivell 1",
           stars: 1,
-          url: "https://davidc0208.github.io/RACC-ReactionDriver/",
+          url: " https://effective-succotash-g4rg4r7v476qfp6v6-5500.app.github.dev/",
           image: "../img/img-juego.png",
         },
         {
           id: 2,
           name: "Nivell 2",
           stars: 0,
-          url: "#", // Aquí iría la URL del nivel 2
+          url: "URL_DEL_NIVELL_2", 
           image: "../img/img-juego.png",
         },
         {
           id: 3,
           name: "Nivell 3",
           stars: 0,
-          url: "#", // Aquí iría la URL del nivel 3
+          url: "URL_DEL_NIVELL_3", 
           image: "../img/img-juego.png",
         },
       ];
@@ -307,7 +279,6 @@
         grid.innerHTML = "";
 
         levels.forEach((lvl) => {
-          // Un nivel está bloqueado si su ID es mayor que el máximo desbloqueado
           const isLocked = lvl.id > maxUnlocked;
 
           const card = document.createElement("div");
@@ -327,17 +298,13 @@
             <div class="level-name">${lvl.name}</div>
             <div class="stars-container">${starsHTML}</div>
             <div class="preview" ${previewStyle}>STAGE ${lvl.id}</div>
-            ${
-              isLocked
-                ? `
+            ${isLocked ? `
                 <div class="lock-overlay">
                     <div class="chain chain-1"></div>
                     <div class="chain chain-2"></div>
                     <div class="padlock">🔒</div>
                 </div>
-            `
-                : ""
-            }
+            ` : ""}
             <button class="play-btn" onclick="handlePlay(${lvl.id})">JUGAR</button>
           `;
           grid.appendChild(card);
@@ -354,26 +321,15 @@
           return;
         }
 
-        // --- LÓGICA DE DESBLOQUEO ---
-        // Para esta demo: al hacer click en un nivel desbloqueado,
-        // simulamos que lo pasas y desbloqueamos el siguiente.
-        if (id === maxUnlocked && maxUnlocked < levels.length) {
-          maxUnlocked++;
-          localStorage.setItem("reactionDriveProgress", maxUnlocked);
-
-          // Si quieres que el desbloqueo sea instantáneo visualmente:
-          setTimeout(() => {
-            createGallery();
-          }, 500);
-        }
-
+        // --- LÓGICA CORREGIDA ---
+        // Ya no desbloqueamos el siguiente nivel aquí.
+        // Solo enviamos al jugador al nivel correspondiente.
         const currentLevel = levels.find((l) => l.id === id);
+        
         if (currentLevel.url && currentLevel.url !== "#") {
           window.location.href = currentLevel.url;
         } else {
-          alert(
-            `Has completat el ${currentLevel.name}. El següent nivell ja està disponible!`,
-          );
+          alert(`Aquest nivell encara no està programat.`);
         }
       };
 
