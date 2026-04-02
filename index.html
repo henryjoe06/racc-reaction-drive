@@ -3,37 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="" />
     <title>REACTION DRIVER</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="pagina-de-juegos/index.html" />
   </head>
   <body>
     <header class="game-header">
+      <img
+        src="img/Logo-RACC.webp"
+        class="nueva-imagen-izquierda"
+        alt="Logo RACC"
+      />
+
       <div class="header-container">
         <img src="img/logo.png" alt="Logo Reaction" class="header-logo" />
-
         <div class="header-titols">
           <h1>REACTION</h1>
           <h2>DRIVER</h2>
         </div>
       </div>
-      <img
-        src="img/Logo-RACC.webp"
-        class="nueva-imagen-izquierda"
-        alt="Logo Nuevo"
-      />
-
-      <div class="logo-central"></div>
     </header>
+
     <main>
+      <a href="index1.html">
+        <button class="boton-volver">< TORNAR</button>
+      </a>
+
       <video id="video-fondo" autoplay muted loop>
         <source src="video/Grabación 2026-03-23 130532.mp4" type="video/mp4" />
       </video>
+
       <div class="contenedor-menu">
-        <a href="pagina-de-juegos/index.html"
-          ><button class="btn-gran">JUGAR</button></a
-        >
+        <a href="pagina-de-juegos/index.html">
+          <button class="btn-gran">JUGAR</button>
+        </a>
 
         <div class="bloque-opcions">
           <button id="btn-opcions" class="btn-gran">OPCIONS</button>
@@ -49,33 +51,36 @@
             <button id="btn-tancar">Tancar</button>
           </div>
         </div>
+
+        <a href="puntuacions.html">
+          <button class="btn-gran">¿Com s'ha fet?</button>
+        </a>
       </div>
-      <script>
-        const botoOpcions = document.getElementById("btn-opcions");
-        const finestra = document.getElementById("finestra-instruccions");
-        const botoTancar = document.getElementById("btn-tancar");
-
-        // Mostrar / Amagar
-        botoOpcions.onclick = function () {
-          finestra.classList.toggle("oculto");
-        };
-
-        // Tancar
-        botoTancar.onclick = function () {
-          finestra.classList.add("oculto");
-        };
-      </script>
     </main>
+
     <footer class="footer-fijo">
-      <img src="img/logo-transit.webp" alt="Logo" class="img-footer" />
-
-      <p>Copyright @2026</p>
-
+      <img src="img/logo-transit.webp" alt="Transit" class="img-footer" />
+      <h3>@2026</h3>
       <img
         src="img/logo-generalitat-de-catalunya.webp"
-        alt="Logo"
-        class="img-footer img-derecha"
+        alt="Generalitat"
+        class="img-footer"
       />
     </footer>
+
+    <script>
+      const botoOpcions = document.getElementById("btn-opcions");
+      const finestra = document.getElementById("finestra-instruccions");
+      const botoTancar = document.getElementById("btn-tancar");
+
+      botoOpcions.onclick = function (e) {
+        e.preventDefault();
+        finestra.classList.toggle("oculto");
+      };
+
+      botoTancar.onclick = function () {
+        finestra.classList.add("oculto");
+      };
+    </script>
   </body>
 </html>
