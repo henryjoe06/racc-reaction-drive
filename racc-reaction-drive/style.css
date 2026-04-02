@@ -1,72 +1,51 @@
 body {
   margin: 0;
   padding: 0;
+  /* Forzamos que la web siempre mida al menos 1200px */
+  width: 1200px;
+  min-width: 1200px;
+  overflow-x: auto;
 }
-/* header*/
-/* Estil per al Header */
+
 /* VIDEO DE FONDO */
 #video-fondo {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Rellena toda la pantalla */
-  z-index: -1; /* Se queda detrás de todo */
+  /* Cambiamos 100% por vh/vw para que no se encoja al minimizar */
+  width: 100vw;
+  height: 100vh;
+  min-width: 1200px;
+  object-fit: cover;
+  z-index: -1;
 }
 
-/* CONTENIDO DEL MENÚ */
-#menu-principal {
-  position: relative;
-  z-index: 10; /* Encima del video */
-  text-align: center;
-}
-
-.boton-menu {
-  background: #ffcc00;
-  padding: 20px 40px;
-  margin: 20px;
-  border-radius: 12px;
-  font-size: 22px;
-  border: 4px solid #000;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.boton-menu:hover {
-  transform: scale(1.1);
-  filter: brightness(1.2);
-}
-
+/* HEADER FIJO */
 .game-header {
-  background-color: #ffcc00; /* El mateix groc de la teva imatge */
-  border-bottom: 5px solid #000000; /* Borde negre gruixut a sota */
-  padding: 20px 10px;
-  width: 100%;
+  background-color: #ffcc00;
+  border-bottom: 5px solid #000000;
+  padding: 20px 0;
+  width: 160%; /* Se adaptará a los 1200px del body */
   height: 100px;
   display: flex;
-  justify-content: center; /* Centra el contingut */
+  justify-content: center;
   align-items: center;
+  position: relative;
+  box-sizing: border-box;
 }
-.div-logo {
-  justify-content: space-between;
-  align-items: right;
-  margin-top: 10px;
-}
+
+/* ... (el resto de estilos de header y botones se mantienen igual) ... */
 
 .header-container {
   display: flex;
   align-items: center;
-  gap: 25px; /* Espai entre logo i text */
+  gap: 25px;
 }
-
 .header-logo {
-  width: 80px; /* Ajusta la mida del teu logo */
+  width: 80px;
   height: auto;
-  /* Ombra sòlida per a l'efecte 2D */
   filter: drop-shadow(4px 4px 0px #000);
 }
-
 .header-titols h1 {
   margin: 0;
   font-family: "Arial Black", sans-serif;
@@ -74,7 +53,6 @@ body {
   line-height: 1;
   color: #000;
 }
-
 .header-titols h2 {
   margin: 0;
   font-family: "Arial Black", sans-serif;
@@ -83,128 +61,88 @@ body {
   letter-spacing: 2px;
 }
 .nueva-imagen-izquierda {
-  position: absolute; /* Hace que la imagen flote */
-  left: 20px; /* La pega a la izquierda (donde dibujaste el cuadro) */
-  top: 7%; /* La baja a la mitad del header */
-  transform: translateY(-50%); /* La centra verticalmente perfecta */
-
-  height: 100px; /* Ajusta este tamaño para que quepa bien en tu cuadro */
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 90px;
   width: auto;
 }
-/*Main*/
-/* Contenedor principal */
-.boton-volver {
-  background: black;
-  color: white;
-  border: 4px solid white;
-  padding: 10px 15px;
-  font-family: "Press Start 2P", cursive;
-  font-size: 12px;
-}
-.button1 {
-  background-color: #007bff;
-  color: white;
-  padding: 30px 30px;
-  border: none;
-  border-radius: 10px;
-}
-.button2 {
-  background-color: #007bff;
-  color: white;
-  padding: 30px 16px;
-  border: none;
-  border-radius: 10px;
-  position: absolute;
-}
-.div2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.contenedor {
-  display: flex;
-  flex-direction: column;
-  padding: 50px;
-  margin: 100px;
-  gap: 20px;
-}
-/* El contenedor que agrupa todo */
+
 .contenedor-menu {
   display: flex;
   flex-direction: column;
-  gap: 60px; /* Espacio entre un botón y otro */
-  margin-left: 180px; /* Separación del borde izquierdo */
-  margin-top: 170px; /* <--- ESTO los baja un poco más */
+  gap: 40px;
+  margin-left: 180px;
+  margin-top: 140px;
   align-items: flex-start;
+  position: relative;
 }
 
-/* Botones más grandes y anchos */
 .btn-gran {
   background-color: #ffcc00;
   color: black;
-  border: 4px solid black; /* Borde un poco más grueso */
-  padding: 15px 0px; /* Más espacio arriba y abajo */
-  width: 280px; /* <--- MÁS ANCHO que antes */
-  font-size: 22px; /* Texto un poco más grande */
+  border: 4px solid black;
+  padding: 15px 0px;
+  width: 280px;
+  font-size: 22px;
   font-family: "Arial Black", sans-serif;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 6px 6px 0px black; /* Sombra más marcada */
+  box-shadow: 6px 6px 0px black;
   text-transform: uppercase;
   border-radius: 20px;
 }
 
-/* Efecto al pulsar */
 .btn-gran:active {
   transform: translate(3px, 3px);
   box-shadow: 2px 2px 0px black;
 }
 
-/* Ajuste de la pestaña de opciones para que no tape el botón */
-.bloque-opcions {
-  position: relative;
+.boton-volver {
+  background: rgb(0, 0, 0);
+  color: #ffcc00;
+  border: 4px solid #ffcc00;
+  padding: 10px 15px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .popover {
   position: absolute;
-  left: 300px; /* Se mueve a la derecha según el nuevo ancho del botón */
+  left: 300px;
   top: 0px;
-  background: rgb(255, 255, 255);
+  background: white;
   border: 5px solid black;
   padding: 20px;
   width: 300px;
-  z-index: 100px;
-  box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
-
 .oculto {
   display: none;
 }
-/*Footer*/
+
+/* FOOTER CORREGIDO */
 .footer-fijo {
   position: fixed;
   bottom: 0;
   left: 0;
+  /* IMPORTANTE: El footer debe tener el mismo ancho mínimo que la web */
   width: 100%;
+  min-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  /* SOLUCIÓN: Añadimos espacio en los laterales */
-  padding: 10px 30px; /* 10px arriba/abajo, 30px a los lados */
-
+  padding: 10px 30px;
   background-color: #222;
   color: white;
   z-index: 1000;
-  box-sizing: border-box; /* IMPORTANTE: Para que el padding no estire el ancho del footer */
+  box-sizing: border-box;
 }
 
 .img-footer {
   width: 250px;
   height: auto;
-}
-
-/* Margen extra para asegurar que no se corte a la derecha */
-.img-derecha {
-  margin-right: 15px;
 }

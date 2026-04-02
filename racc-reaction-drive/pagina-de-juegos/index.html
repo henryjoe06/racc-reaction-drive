@@ -148,7 +148,6 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        /* Fondo por defecto si no hay imagen */
         background-image: repeating-linear-gradient(
           45deg,
           #16213e,
@@ -274,14 +273,16 @@
     <div class="levels-grid" id="mainGrid"></div>
 
     <script>
-      // --- CONFIGURACIÓN DE NIVELES ---
-      // Solo tienes que poner la ruta de tu imagen en la propiedad "image"
+      // --- SISTEMA DE PROGRESO ---
+      // Obtenemos el nivel máximo alcanzado del localStorage (por defecto 1)
+      let maxUnlocked =
+        parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
+
       const levels = [
         {
           id: 1,
           name: "Nivell 1",
           stars: 1,
-          locked: false,
           url: "https://davidc0208.github.io/RACC-ReactionDriver/",
           image: "../img/img-juego.png",
         },
@@ -289,35 +290,14 @@
           id: 2,
           name: "Nivell 2",
           stars: 0,
-          locked: true,
+          url: "#", // Aquí iría la URL del nivel 2
           image: "../img/img-juego.png",
         },
         {
           id: 3,
           name: "Nivell 3",
           stars: 0,
-          locked: true,
-          image: "../img/img-juego.png",
-        },
-        {
-          id: 4,
-          name: "Nivell 4",
-          stars: 0,
-          locked: true,
-          image: "../img/img-juego.png",
-        },
-        {
-          id: 5,
-          name: "Nivell 5",
-          stars: 0,
-          locked: true,
-          image: "../img/img-juego.png",
-        },
-        {
-          id: 6,
-          name: "Nivell 6",
-          stars: 0,
-          locked: true,
+          url: "#", // Aquí iría la URL del nivel 3
           image: "../img/img-juego.png",
         },
       ];
@@ -327,8 +307,11 @@
         grid.innerHTML = "";
 
         levels.forEach((lvl) => {
+          // Un nivel está bloqueado si su ID es mayor que el máximo desbloqueado
+          const isLocked = lvl.id > maxUnlocked;
+
           const card = document.createElement("div");
-          card.className = `level-card ${lvl.locked ? "locked" : ""}`;
+          card.className = `level-card ${isLocked ? "locked" : ""}`;
           card.id = `card-${lvl.id}`;
 
           let starsHTML = "";
@@ -336,7 +319,6 @@
             starsHTML += `<span class="star ${i <= lvl.stars ? "earned" : ""}">★</span>`;
           }
 
-          // Aquí aplicamos la imagen de fondo si existe
           const previewStyle = lvl.image
             ? `style="background-image: url('${lvl.image}');"`
             : "";
@@ -346,7 +328,7 @@
             <div class="stars-container">${starsHTML}</div>
             <div class="preview" ${previewStyle}>STAGE ${lvl.id}</div>
             ${
-              lvl.locked
+              isLocked
                 ? `
                 <div class="lock-overlay">
                     <div class="chain chain-1"></div>
@@ -356,26 +338,42 @@
             `
                 : ""
             }
-            <button class="play-btn" onclick="handlePlay(${lvl.id})">PLAY</button>
+            <button class="play-btn" onclick="handlePlay(${lvl.id})">JUGAR</button>
           `;
           grid.appendChild(card);
         });
       }
 
       window.handlePlay = function (id) {
-        const currentLevel = levels.find((l) => l.id === id);
+        const isLocked = id > maxUnlocked;
         const cardElement = document.getElementById(`card-${id}`);
 
-        if (currentLevel.locked) {
+        if (isLocked) {
           cardElement.classList.add("shake");
           setTimeout(() => cardElement.classList.remove("shake"), 400);
           return;
         }
 
-        if (currentLevel.url) {
+        // --- LÓGICA DE DESBLOQUEO ---
+        // Para esta demo: al hacer click en un nivel desbloqueado,
+        // simulamos que lo pasas y desbloqueamos el siguiente.
+        if (id === maxUnlocked && maxUnlocked < levels.length) {
+          maxUnlocked++;
+          localStorage.setItem("reactionDriveProgress", maxUnlocked);
+
+          // Si quieres que el desbloqueo sea instantáneo visualmente:
+          setTimeout(() => {
+            createGallery();
+          }, 500);
+        }
+
+        const currentLevel = levels.find((l) => l.id === id);
+        if (currentLevel.url && currentLevel.url !== "#") {
           window.location.href = currentLevel.url;
         } else {
-          alert(`Próximamente: ${currentLevel.name}`);
+          alert(
+            `Has completat el ${currentLevel.name}. El següent nivell ja està disponible!`,
+          );
         }
       };
 
