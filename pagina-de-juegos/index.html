@@ -248,13 +248,14 @@
 
     <script>
       // --- SISTEMA DE PROGRÉS ---
+      // Obtenim el progrés real del localStorage. Si no existeix, és 1.
       let maxUnlocked = parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
 
       const levels = [
         {
           id: 1,
           name: "Nivell 1",
-          stars: 1,
+          stars: 3, // Pots posar estrelles segons el progrés real si vols
           url: "https://davidc0208.github.io/RACC-ReactionDriver/",
           image: "../img/img-juego.png",
         },
@@ -279,6 +280,7 @@
         grid.innerHTML = "";
 
         levels.forEach((lvl) => {
+          // El nivell està bloquejat si el seu ID és major que el màxim desbloquejat
           const isLocked = lvl.id > maxUnlocked;
 
           const card = document.createElement("div");
@@ -287,7 +289,9 @@
 
           let starsHTML = "";
           for (let i = 1; i <= 3; i++) {
-            starsHTML += `<span class="star ${i <= lvl.stars ? "earned" : ""}">★</span>`;
+            // Estrelles daurades només si el nivell ja ha estat superat (lvl.id < maxUnlocked)
+            const earned = lvl.id < maxUnlocked ? "earned" : "";
+            starsHTML += `<span class="star ${earned}">★</span>`;
           }
 
           const previewStyle = lvl.image
@@ -321,9 +325,9 @@
           return;
         }
 
-        // --- LÓGICA CORREGIDA ---
-        // Ya no desbloqueamos el siguiente nivel aquí.
-        // Solo enviamos al jugador al nivel correspondiente.
+        // GUARDEM EL NIVELL ACTUAL al localStorage per saber quin estem jugant
+        localStorage.setItem("currentLevelInPlay", id);
+        
         const currentLevel = levels.find((l) => l.id === id);
         
         if (currentLevel.url && currentLevel.url !== "#") {
@@ -334,6 +338,16 @@
       };
 
       createGallery();
+
+      // NOTA: Perquè el nivell 2 o 3 es desbloquegi, hauràs d'afegir aquest codi 
+      // DINS del teu joc (quan el jugador guanyi):
+      // ----------------------------------------------------------------------
+      // let current = parseInt(localStorage.getItem("currentLevelInPlay")) || 1;
+      // let progress = parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
+      // if (current === progress) {
+      //    localStorage.setItem("reactionDriveProgress", current + 1);
+      // }
+      // ----------------------------------------------------------------------
     </script>
   </body>
 </html>
