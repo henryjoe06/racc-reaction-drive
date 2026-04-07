@@ -43,7 +43,7 @@
         border: 4px solid var(--cyan);
         padding: 10px 15px;
         font-family: "Press Start 2P", cursive;
-        font-size: 12px;
+        font-size: 10px;
         cursor: pointer;
         text-decoration: none;
         display: inline-block;
@@ -59,7 +59,7 @@
       }
 
       h1 {
-        font-size: 36px;
+        font-size: 32px;
         margin-bottom: 60px;
         color: #fff;
         text-shadow:
@@ -72,7 +72,7 @@
       .levels-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 50px;
+        gap: 40px;
         max-width: 1100px;
       }
 
@@ -91,17 +91,16 @@
       }
 
       .level-card:not(.locked):hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 25px 0px rgba(0, 0, 0, 0.5);
+        transform: translateY(-10px);
         border-color: var(--gold);
       }
 
       .level-name {
         font-size: 14px;
         margin-bottom: 20px;
-        text-align: center;
-        height: 40px;
         color: var(--cyan);
+        height: 40px;
+        text-align: center;
       }
 
       .stars-container {
@@ -112,21 +111,25 @@
       }
 
       .star {
-        font-size: 32px;
+        font-size: 28px;
         color: #2c3e50;
-        margin: 0 5px;
-        display: inline-block;
+        margin: 0 3px;
       }
 
       .star.earned {
         color: var(--gold);
-        text-shadow: 0 0 15px orange;
+        text-shadow: 0 0 10px orange;
+        display: inline-block;
         animation: bounce 0.6s ease-in-out infinite alternate;
       }
 
       @keyframes bounce {
-        from { transform: translateY(0); }
-        to { transform: translateY(-5px); }
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-5px);
+        }
       }
 
       .preview {
@@ -143,15 +146,6 @@
         border-radius: 10px;
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
-        background-image: repeating-linear-gradient(
-          45deg,
-          #16213e,
-          #16213e 10px,
-          #1a1a2e 10px,
-          #1a1a2e 20px
-        );
-        overflow: hidden;
         text-shadow: 2px 2px 0 #000;
       }
 
@@ -166,13 +160,13 @@
         cursor: pointer;
         width: 100%;
         border-radius: 10px;
-        text-transform: uppercase;
       }
 
       .play-btn:hover:not(:disabled) {
         background: #a3cb38;
       }
 
+      /* --- ESTILOS DE BLOQUEO RECUPERADOS --- */
       .locked {
         filter: grayscale(0.5) brightness(0.7);
       }
@@ -188,19 +182,24 @@
         justify-content: center;
         align-items: center;
         pointer-events: none;
+        overflow: hidden;
+        border-radius: 20px;
       }
 
       .chain {
         position: absolute;
-        width: 130%;
+        width: 140%;
         height: 25px;
         background: linear-gradient(90deg, #7f8c8d, #bdc3c7, #7f8c8d);
         border: 4px solid #2d3436;
         border-radius: 15px;
       }
-
-      .chain-1 { transform: rotate(45deg); }
-      .chain-2 { transform: rotate(-45deg); }
+      .chain-1 {
+        transform: rotate(45deg);
+      }
+      .chain-2 {
+        transform: rotate(-45deg);
+      }
 
       .padlock {
         position: relative;
@@ -218,22 +217,28 @@
       }
 
       @keyframes lockFloat {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
       }
-
       @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20% { transform: translateX(-10px); }
-        40% { transform: translateX(10px); }
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-10px);
+        }
+        40% {
+          transform: translateX(10px);
+        }
       }
-      .shake { animation: shake 0.4s ease-in-out; }
-
-      @media (max-width: 1000px) {
-        .levels-grid { grid-template-columns: repeat(2, 1fr); }
-      }
-      @media (max-width: 650px) {
-        .levels-grid { grid-template-columns: 1fr; }
+      .shake {
+        animation: shake 0.4s ease-in-out;
       }
     </style>
   </head>
@@ -243,45 +248,59 @@
     </div>
 
     <h1>REACTION DRIVER</h1>
-
     <div class="levels-grid" id="mainGrid"></div>
 
     <script>
-      // --- SISTEMA DE PROGRÉS ---
-      // Obtenim el progrés real del localStorage. Si no existeix, és 1.
-      let maxUnlocked = parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
+      // 1. LÓGICA DE PROGRESO AL VOLVER
+      function checkProgress() {
+        const lastPlayed = localStorage.getItem("lastPlayedID");
+        const isWaiting = sessionStorage.getItem("waitingVictory");
+
+        if (isWaiting === "true" && lastPlayed) {
+          const currentID = parseInt(lastPlayed);
+          const savedProgress =
+            parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
+
+          if (currentID >= savedProgress) {
+            localStorage.setItem("reactionDriveProgress", currentID + 1);
+          }
+          localStorage.setItem(`stars_lvl_${currentID}`, "3");
+          sessionStorage.removeItem("waitingVictory");
+        }
+      }
+
+      checkProgress();
 
       const levels = [
         {
           id: 1,
           name: "Nivell 1",
-          stars: 3, // Pots posar estrelles segons el progrés real si vols
           url: "https://davidc0208.github.io/RACC-ReactionDriver/",
           image: "../img/img-juego.png",
         },
         {
           id: 2,
           name: "Nivell 2",
-          stars: 0,
-          url: "https://davidc0208.github.io/RACC-ReactionDriver/", 
+          url: "https://davidc0208.github.io/RACC-ReactionDriver/",
           image: "../img/img-juego.png",
         },
         {
           id: 3,
           name: "Nivell 3",
-          stars: 0,
-          url: "https://davidc0208.github.io/RACC-ReactionDriver/", 
+          url: "https://davidc0208.github.io/RACC-ReactionDriver/",
           image: "../img/img-juego.png",
         },
       ];
 
-      function createGallery() {
+      function renderLevels() {
+        const progress =
+          parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
         const grid = document.getElementById("mainGrid");
         grid.innerHTML = "";
 
         levels.forEach((lvl) => {
-          // El nivell està bloquejat si el seu ID és major que el màxim desbloquejat
-          const isLocked = lvl.id > maxUnlocked;
+          const isLocked = lvl.id > progress;
+          const hasStars = localStorage.getItem(`stars_lvl_${lvl.id}`) === "3";
 
           const card = document.createElement("div");
           card.className = `level-card ${isLocked ? "locked" : ""}`;
@@ -289,26 +308,24 @@
 
           let starsHTML = "";
           for (let i = 1; i <= 3; i++) {
-            // Estrelles daurades només si el nivell ja ha estat superat (lvl.id < maxUnlocked)
-            const earned = lvl.id < maxUnlocked ? "earned" : "";
-            starsHTML += `<span class="star ${earned}">★</span>`;
+            starsHTML += `<span class="star ${hasStars ? "earned" : ""}">★</span>`;
           }
-
-          const previewStyle = lvl.image
-            ? `style="background-image: url('${lvl.image}');"`
-            : "";
 
           card.innerHTML = `
             <div class="level-name">${lvl.name}</div>
             <div class="stars-container">${starsHTML}</div>
-            <div class="preview" ${previewStyle}>STAGE ${lvl.id}</div>
-            ${isLocked ? `
+            <div class="preview" style="background-image: url('${lvl.image}');">STAGE ${lvl.id}</div>
+            ${
+              isLocked
+                ? `
                 <div class="lock-overlay">
                     <div class="chain chain-1"></div>
                     <div class="chain chain-2"></div>
                     <div class="padlock">🔒</div>
                 </div>
-            ` : ""}
+            `
+                : ""
+            }
             <button class="play-btn" onclick="handlePlay(${lvl.id})">JUGAR</button>
           `;
           grid.appendChild(card);
@@ -316,38 +333,22 @@
       }
 
       window.handlePlay = function (id) {
-        const isLocked = id > maxUnlocked;
-        const cardElement = document.getElementById(`card-${id}`);
+        const progress =
+          parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
 
-        if (isLocked) {
-          cardElement.classList.add("shake");
-          setTimeout(() => cardElement.classList.remove("shake"), 400);
+        if (id > progress) {
+          const card = document.getElementById(`card-${id}`);
+          card.classList.add("shake");
+          setTimeout(() => card.classList.remove("shake"), 400);
           return;
         }
 
-        // GUARDEM EL NIVELL ACTUAL al localStorage per saber quin estem jugant
-        localStorage.setItem("currentLevelInPlay", id);
-        
-        const currentLevel = levels.find((l) => l.id === id);
-        
-        if (currentLevel.url && currentLevel.url !== "#") {
-          window.location.href = currentLevel.url;
-        } else {
-          alert(`Aquest nivell encara no està programat.`);
-        }
+        localStorage.setItem("lastPlayedID", id);
+        sessionStorage.setItem("waitingVictory", "true");
+        window.location.href = levels.find((l) => l.id === id).url;
       };
 
-      createGallery();
-
-      // NOTA: Perquè el nivell 2 o 3 es desbloquegi, hauràs d'afegir aquest codi 
-      // DINS del teu joc (quan el jugador guanyi):
-      // ----------------------------------------------------------------------
-      // let current = parseInt(localStorage.getItem("currentLevelInPlay")) || 1;
-      // let progress = parseInt(localStorage.getItem("reactionDriveProgress")) || 1;
-      // if (current === progress) {
-      //    localStorage.setItem("reactionDriveProgress", current + 1);
-      // }
-      // ----------------------------------------------------------------------
+      renderLevels();
     </script>
   </body>
 </html>
