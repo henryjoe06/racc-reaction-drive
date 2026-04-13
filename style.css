@@ -7,12 +7,11 @@ body {
   overflow-x: auto;
 }
 
-/* VIDEO DE FONDO */
+/*VIDEO DE FONDO*/
 #video-fondo {
   position: fixed;
   top: 0;
   left: 0;
-  /* Cambiamos 100% por vh/vw para que no se encoja al minimizar */
   width: 100vw;
   height: 100vh;
   min-width: 1200px;
@@ -20,7 +19,7 @@ body {
   z-index: -1;
 }
 
-/* HEADER FIJO */
+/* HEADER*/
 .game-header {
   background-color: #ffcc00;
   border-bottom: 5px solid #000000;
@@ -34,7 +33,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ... (el resto de estilos de header y botones se mantienen igual) ... */
 
 .header-container {
   display: flex;
@@ -68,7 +66,7 @@ body {
   height: 90px;
   width: auto;
 }
-
+/*MAIN*/
 .contenedor-menu {
   display: flex;
   flex-direction: column;
@@ -124,12 +122,12 @@ body {
   display: none;
 }
 
-/* FOOTER CORREGIDO */
+/* FOOTER*/
 .footer-fijo {
   position: fixed;
   bottom: 0;
   left: 0;
-  /* IMPORTANTE: El footer debe tener el mismo ancho mínimo que la web */
+
   width: 100%;
   min-width: 1200px;
   display: flex;
