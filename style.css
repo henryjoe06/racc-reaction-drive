@@ -1,7 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  /* Forzamos que la web siempre mida al menos 1200px */
   width: 1200px;
   min-width: 1200px;
   overflow-x: auto;
@@ -76,7 +75,6 @@ body {
   align-items: flex-start;
   position: relative;
 }
-
 .btn-gran {
   background-color: #ffcc00;
   color: black;
@@ -91,12 +89,10 @@ body {
   text-transform: uppercase;
   border-radius: 20px;
 }
-
 .btn-gran:active {
   transform: translate(3px, 3px);
   box-shadow: 2px 2px 0px black;
 }
-
 .boton-volver {
   background: rgb(0, 0, 0);
   color: #ffcc00;
@@ -107,7 +103,6 @@ body {
   margin-left: 10px;
   cursor: pointer;
 }
-
 .popover {
   position: absolute;
   left: 300px;
@@ -117,6 +112,7 @@ body {
   padding: 20px;
   width: 300px;
   z-index: 100;
+  font-family: "Arial Black", sans-serif;
 }
 .oculto {
   display: none;
